@@ -50,6 +50,13 @@ group "default" {
   targets = ["web", "workers", "cli", "mcp", "aio"]
 }
 
+target "web-fork" {
+  inherits   = ["web"]
+  tags       = ["ghcr.io/notritikpatni/karakeep-web:fork"]
+  cache-from = ["type=registry,ref=ghcr.io/notritikpatni/karakeep-build-cache:web-fork-cache-amd64"]
+  cache-to   = ["type=registry,mode=max,ref=ghcr.io/notritikpatni/karakeep-build-cache:web-fork-cache-amd64"]
+}
+
 target "_common" {
   context    = "."
   dockerfile = "docker/Dockerfile"

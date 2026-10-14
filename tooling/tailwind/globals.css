@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 40 20% 99%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -16,53 +16,53 @@
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 220 14% 96%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;
+    --muted: 220 14% 96%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 221 70% 95%;
+    --accent-foreground: 221 60% 25%;
 
     --destructive: 357.2 100% 45.3%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 215 20.2% 65.1%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 221 83% 53%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 224 24% 6.5%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 223 22% 8.5%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 223 22% 8.5%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 222 18% 12.5%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 222 18% 12.5%;
+    --muted-foreground: 215 16% 62%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 222 24% 14%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 358.7 100% 69.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 215.4 16.3% 46.9%;
+    --border: 221 16% 16%;
+    --input: 221 16% 16%;
+    --ring: 221 83% 60%;
   }
 }
 
@@ -110,5 +110,55 @@
   .sidebar-scrollbar:hover,
   .sidebar-scrollbar:focus-within {
     scrollbar-color: hsl(var(--muted-foreground) / 0.15) transparent;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Ritik UI fork — compact bookmark cards
+   (ui/ritik-compact branch, Oct 2026)
+   ═══════════════════════════════════════════════════════ */
+@layer components {
+  .bookmark-card-content {
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+  /* Note-markdown inside cards: heading scale pulled way down, cards are index views */
+  .bookmark-card-content h1,
+  .bookmark-card-content h2,
+  .bookmark-card-content h3,
+  .bookmark-card-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin: 0.25rem 0 0.15rem;
+    letter-spacing: -0.01em;
+  }
+  .bookmark-card-content p {
+    margin: 0.2rem 0;
+  }
+  .bookmark-card-content ul,
+  .bookmark-card-content ol {
+    margin: 0.15rem 0;
+    padding-left: 1.1rem;
+  }
+  .bookmark-card-content li {
+    margin: 0.1rem 0;
+  }
+  .bookmark-card-content pre {
+    margin: 0.3rem 0;
+    font-size: 0.8rem;
+  }
+  .bookmark-card-content img {
+    max-height: 5.5rem;
+    width: auto;
+    border-radius: 0.375rem;
+  }
+  .bookmark-card-content blockquote {
+    margin: 0.25rem 0;
+    padding-left: 0.75rem;
+    font-size: 0.875rem;
+  }
+  .bookmark-card-content hr {
+    margin: 0.35rem 0;
   }
 }

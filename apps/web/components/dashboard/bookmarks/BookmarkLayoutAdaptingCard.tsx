@@ -339,17 +339,21 @@ function ListView({
         className="left-1 top-1/2 -translate-y-1/2"
       />
       <HoverActionBar bookmark={bookmark} />
-      <div className="flex size-32 items-center justify-center overflow-hidden">
+      <div className="flex size-32 shrink-0 items-center justify-center overflow-hidden">
         {image("list", cn("size-32 rounded-lg", imgFitClass))}
       </div>
       <div className="flex h-full flex-1 flex-col justify-between gap-2 overflow-hidden">
         <div className="flex flex-col gap-2 overflow-hidden">
           {showTitle && title && (
-            <div className="line-clamp-2 flex-none shrink-0 overflow-hidden text-ellipsis break-words text-lg">
+            <div className="line-clamp-2 flex-none shrink-0 overflow-hidden text-ellipsis break-words text-[0.95rem] font-medium leading-snug">
               {title}
             </div>
           )}
-          {content && <div className="shrink-1 overflow-hidden">{content}</div>}
+          {content && (
+            <div className="shrink-1 bookmark-card-content overflow-hidden">
+              {content}
+            </div>
+          )}
           {note && <NotePreview note={note} bookmarkId={bookmark.id} />}
           {showTags && (
             <div className="flex shrink-0 flex-wrap gap-1 overflow-hidden">
@@ -387,7 +391,7 @@ function GridView({
   const note = showNotes ? bookmark.note?.trim() : undefined;
   const img = image(
     "grid",
-    cn("h-56 min-h-56 w-full rounded-t-lg", imgFitClass),
+    cn("h-40 min-h-40 w-full rounded-t-lg", imgFitClass),
   );
 
   return (
@@ -395,7 +399,7 @@ function GridView({
       className={cn(
         "group relative flex flex-col overflow-hidden rounded-lg",
         className,
-        fitHeight && layout != "grid" ? "max-h-96" : "h-96",
+        fitHeight || layout == "masonry" ? "max-h-[28rem]" : "h-96",
       )}
       data-bookmark-index={bookmarkIndex}
     >
@@ -403,15 +407,19 @@ function GridView({
       <OwnerIndicator bookmark={bookmark} />
       <DragHandle bookmark={bookmark} className="left-2 top-2" />
       <HoverActionBar bookmark={bookmark} />
-      {img && <div className="h-56 w-full shrink-0 overflow-hidden">{img}</div>}
+      {img && <div className="h-40 w-full shrink-0 overflow-hidden">{img}</div>}
       <div className="flex h-full flex-col justify-between gap-2 overflow-hidden p-2">
         <div className="grow-1 flex flex-col gap-2 overflow-hidden">
           {showTitle && title && (
-            <div className="line-clamp-2 flex-none shrink-0 overflow-hidden text-ellipsis break-words text-lg">
+            <div className="line-clamp-2 flex-none shrink-0 overflow-hidden text-ellipsis break-words text-[0.95rem] font-medium leading-snug">
               {title}
             </div>
           )}
-          {content && <div className="shrink-1 overflow-hidden">{content}</div>}
+          {content && (
+            <div className="shrink-1 bookmark-card-content overflow-hidden">
+              {content}
+            </div>
+          )}
           {note && <NotePreview note={note} bookmarkId={bookmark.id} />}
           {showTags && (
             <div className="flex shrink-0 flex-wrap gap-1 overflow-hidden">
