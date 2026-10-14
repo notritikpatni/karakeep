@@ -42,6 +42,7 @@ jobs:
           RELEASE: ""
           SERVER_VERSION: fork-${{ github.sha }}
         with:
+          target: web-fork
           source: .
           files: docker/docker-bake.hcl
           push: true
