@@ -40,7 +40,7 @@ jobs:
         env:
           ARCH: amd64
           RELEASE: ""
-          SERVER_VERSION: fork-${{ github.sha }}
+          SERVER_VERSION: 0.33.2-fork.1
         with:
           targets: web-fork
           source: .

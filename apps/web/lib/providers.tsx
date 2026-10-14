@@ -88,7 +88,7 @@ export default function Providers({
               <CustomI18nextProvider lang={userLocalSettings.lang}>
                 <ThemeProvider
                   attribute="class"
-                  defaultTheme="system"
+                  defaultTheme="dark"
                   enableSystem
                   disableTransitionOnChange
                 >

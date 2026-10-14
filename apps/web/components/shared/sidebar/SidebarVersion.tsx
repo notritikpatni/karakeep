@@ -70,7 +70,11 @@ export default function SidebarVersion({
   const stableRelease = isStableRelease(effectiveChangelogVersion);
   const displayVersion = serverVersion ?? "unknown";
   const changelogDisplayVersion = effectiveChangelogVersion ?? displayVersion;
-  const versionLabel = `Karakeep v${displayVersion}`;
+  // Fork builds embed long commit shas; show a clean two-part version instead.
+  const trimmedVersion = displayVersion.startsWith("fork-")
+    ? displayVersion.replace(/^fork-([^-]+)-[0-9a-f]{6,}.*$/, "fork-$1")
+    : displayVersion;
+  const versionLabel = `Karakeep v${trimmedVersion}`;
   const releasePageUrl = useMemo(() => {
     if (
       !effectiveChangelogVersion ||
