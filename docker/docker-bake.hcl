@@ -51,7 +51,13 @@ group "default" {
 }
 
 target "web-fork" {
+  # Build the AIO stage so svc-workers is in the s6 boot bundle.
+  # Inheriting the plain `web` stage shipped an image whose workers never
+  # autostart (s6 marks svc-workers "down" at boot) — background jobs
+  # (tagging, indexing, crawling) silently never ran after a container
+  # recreate.
   inherits   = ["web"]
+  target     = "aio"
   tags       = ["ghcr.io/notritikpatni/karakeep-web:fork"]
   cache-from = ["type=registry,ref=ghcr.io/notritikpatni/karakeep-build-cache:web-fork-cache-amd64"]
   cache-to   = ["type=registry,mode=max,ref=ghcr.io/notritikpatni/karakeep-build-cache:web-fork-cache-amd64"]

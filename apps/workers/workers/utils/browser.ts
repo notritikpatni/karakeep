@@ -283,11 +283,19 @@ async function loadAdblocker(): Promise<void> {
   }
   logger.info("[crawler] Loading adblocker ...");
   const globalBlockerResult = await tryCatch(
-    PlaywrightBlocker.fromPrebuiltFull(fetchWithProxy, {
-      path: path.join(os.tmpdir(), "karakeep_adblocker.bin"),
-      read: fs.readFile,
-      write: fs.writeFile,
-    }),
+    // The adblocker fetch has no built-in timeout; a stalled filter-list
+    // download used to hang worker startup forever (all workers share one
+    // Promise.all in apps/workers/index.ts). Abort after 30s and start
+    // without the adblocker instead.
+    PlaywrightBlocker.fromPrebuiltFull(
+      (url: string) =>
+        fetchWithProxy(url, { signal: AbortSignal.timeout(30_000) }),
+      {
+        path: path.join(os.tmpdir(), "karakeep_adblocker.bin"),
+        read: fs.readFile,
+        write: fs.writeFile,
+      },
+    ),
   );
   if (globalBlockerResult.error) {
     logger.error(
