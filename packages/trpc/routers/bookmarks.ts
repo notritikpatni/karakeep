@@ -48,6 +48,7 @@ import type {
 import {
   BookmarkTypes,
   DEFAULT_NUM_BOOKMARKS_PER_PAGE,
+  MAX_BOOKMARK_TITLE_LENGTH,
   MAX_NUM_BOOKMARKS_PER_PAGE,
   zBookmarkSchema,
   zBookmarkReadableContentFormatSchema,
@@ -238,6 +239,23 @@ async function shouldUseLowPriorityQueues(
   }
 }
 
+// Text notes are frequently saved without a title (quick mobile captures).
+// Derive one from the note's first non-empty line: strip markdown heading
+// markers and cap to the same length the schema allows for typed titles.
+function deriveTextBookmarkTitle(text: string, cap: number): string | null {
+  for (const rawLine of text.split("\n")) {
+    const line = rawLine.replace(/^#+\s*/, "").trim();
+    if (!line) {
+      continue;
+    }
+    if (line.length <= cap) {
+      return line;
+    }
+    return `${line.slice(0, cap - 1).trimEnd()}…`;
+  }
+  return null;
+}
+
 export const bookmarksAppRouter = router({
   createBookmark: bookmarksProcedure
     .use(
@@ -347,6 +365,10 @@ export const bookmarksAppRouter = router({
         }
       }
 
+      const effectiveTitle =
+        input.type === BookmarkTypes.TEXT && !input.title
+          ? deriveTextBookmarkTitle(input.text, MAX_BOOKMARK_TITLE_LENGTH)
+          : input.title;
       const bookmark = await ctx.db.transaction(
         (tx) => {
           // Check user quota
