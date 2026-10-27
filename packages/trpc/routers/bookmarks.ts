@@ -386,7 +386,7 @@ export const bookmarksAppRouter = router({
             .insert(bookmarks)
             .values({
               userId: ctx.user.id,
-              title: input.title,
+              title: effectiveTitle,
               type: input.type,
               archived: input.archived,
               favourited: input.favourited,
